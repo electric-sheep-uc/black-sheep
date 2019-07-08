@@ -13,6 +13,8 @@ the [license](LICENSE) in this repository.
 
 The following is intended to make understanding and using the platform easier.
 
+**NOTE:** Vision processing will be added at a later date.
+
 ### Electronics
 
 * [Design](docs/design-pcb.md) - Circuit design and BOM.
