@@ -16,7 +16,6 @@ The following is intended to make understanding and using the platform easier.
 ### Electronics
 
 * [Design](docs/design-pcb.md) - Circuit design and BOM.
-* [Assembly](docs/assembly-pcb.md) - Building the circuit.
 
 ### Hardware
 
