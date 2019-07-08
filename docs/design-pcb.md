@@ -7,7 +7,7 @@ bench power supply on the other hand delivered very solid torque. Observing the
 power supply we saw that each motor could easily draw 3 amps when performing
 some action under load and we ran under the assumption that not every motor
 would be under full load all of the time (as the mass of the robot could be
-spread across several motors). We came to a number of 10 camps budget for the 6
+spread across several motors). We came to a number of 10 amps budget for the 6
 arm motors. Given the increased efficiency of the leg motors and considering
 the fact there are 10 of them, we also assumed that 10 amps was potentially a
 suitable budget. Given the need to power the main board, fans, etc, as well as
