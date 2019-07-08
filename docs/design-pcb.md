@@ -32,6 +32,9 @@ With these requirements, we came to the following circuit:
 
 ![PCB schematic](../electronics/power_selector_cicurt.png)
 
+The traces can reasonably be expected to pass 30A through them, the diodes each
+deliver 7 camps and the whole system is fused to 20A.
+
 ## Components
 
 ![PCB created](../electronics/img_20190520_172351_1024.jpg)
@@ -43,6 +46,7 @@ PCB you will need:
 
 * Power cable with a suitable AWG rating (we found that automotive/marine 25A
 cable is quite good - best to be sourced locally rather than online)
+* [Diodes](https://www.jaycar.co.nz/diode-mbr735-schottky-35v-7a-to-220-2/p/ZR1029)
 * [Power switch](https://www.banggood.com/2Pin-15A-250V-AC20A-125V-AC-Gas-Generator-Kill-Stop-Run-Switch-Fr-Wen-Power-Pro-p-1242672.html)
 * [Fuse holder](https://www.banggood.com/Waterproof-Fuse-Holder-Socket-Blade-Type-In-Line-6-32V-with-10152030A-Replacement-Fuses-p-916113.html)
 * [Battery connector](https://www.banggood.com/5Pcs-30cm-Battery-ESC-XT60-Plug-Extension-Wire-Cable-Male-Female-p-1090915.html)
