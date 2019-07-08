@@ -1,0 +1,10 @@
+---
+documentclass: article
+geometry: margin=1in
+dir: ltr
+links-as-notes: false
+title: Electronics Design
+author:
+- Electric Sheep
+toc: true
+...

@@ -1,0 +1,14 @@
+if(str($qual) != "undef"){
+  $fn = $qual;
+}else{
+  $fn = 64;
+}
+FAN_WIDTH = 49.9;
+FAN_DEPTH = 10.3;
+FAN_HEIGHT = 49.9;
+FAN_HOLE_FRONT_DIAM = 3.8;
+FAN_HOLE_REAR_DIAM = 6.2;
+FAN_HOLE_X_DIST = 40.0;
+FAN_HOLE_Z_DIST = 40.0;
+FAN_MOUNT_HEIGHT = 4;
+FAN_SCREW_DIAM = FAN_HOLE_FRONT_DIAM * 0.9;

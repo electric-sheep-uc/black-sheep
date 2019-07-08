@@ -1,0 +1,27 @@
+/* "Resolution" of arcs */
+if(str($qual) != "undef"){
+  $fn = $qual;
+}else{
+  $fn = 64;
+}
+/* Constants in mm */
+BODY_WIDTH = 19.5;
+BODY_HEIGHT = 37.4;
+BODY_DEPTH = 40.04;
+HORN_DIAM = 19.8;
+HORN_HEIGHT = 2.0;
+HORN_HEIGHT_WHOLE = 5.5;
+HORN_SCREW_MOUNT_DIAM = 9.5;
+HORN_SCREW_HOLE_DIAM = 3.0;
+HORN_SCREW_OFFSET = 7.1;
+HORN_DEPTH_OFFSET = 10.8;
+HORN_HEIGHT_OFFSET = 8.4;
+MOUNT_HEIGHT = 3.7;
+MOUNT_DEPTH = 7.1;
+MOUNT_OFFSET_BOTTOM = 27.4;
+MOUNT_HOLE_OFFSET_Y = 2.6;
+MOUNT_HOLE_DIFF_X = 9.7;
+MOUNT_HOLE_DIAM = 4.2;
+MOUNT_SCREW_DIAM = 2.0;
+/* Plastic colour */
+PRINT_COLOR = [0.2, 0.2, 0.2];
