@@ -1,0 +1,170 @@
+{
+  "configuration": "delta.json",
+  "app": {
+    "author": "Electric Sheep",
+    "config-delta": "delta.json",
+    "name": "Robot"
+  },
+  "button": {
+    "debounce-ms": "250"
+  },
+  "game-controller": {
+    "active": "1",
+    "broadcast-ms": "250",
+    "lost-controller-ms": "2500",
+    "port-local": "3838",
+    "port-remote": "3939",
+    "thread-sleep-ms": "10"
+  },
+  "gyro": {
+    "active": "1",
+    "fall-acc-thresh": "0.55",
+    "fall-acc-time-ms": "250"
+  },
+  "localization": {
+    "field": {
+      "goal-width": "2.6",
+      "field-width": "6.0",
+      "field-height": "9.0"
+    }
+  },
+  "mitecom": {
+    "active": "1",
+    "broadcast-ms": "250",
+    "lost-mate-ms": "2500",
+    "port-local": "3333",
+    "port-remote": "4444",
+    "thread-sleep-ms": "10"
+  },
+  "motor": {
+    "num-motors": "20",
+    "smart": {
+      "active": "1",
+      "baud": "1000000",
+      "interface-a": "/dev/ttyUSB0",
+      "interface-b": "/dev/ttyUSB1",
+      "max-return-data": "256",
+      "max-temp": "70"
+    },
+    "offsets": {
+      "neck-pitch": "90",
+      "neck-yaw": "90",
+      "shoulder-pitch-left": "2048",
+      "shoulder-pitch-right": "1024",
+      "shoulder-roll-left": "2048",
+      "shoulder-roll-right": "2048",
+      "elbow-pitch-left": "2048",
+      "elbow-pitch-right": "2048",
+      "hip-yaw-left": "2248",
+      "hip-yaw-right": "2048",
+      "hip-roll-left": "1648",
+      "hip-roll-right": "2250",
+      "hip-pitch-left": "2148",
+      "hip-pitch-right": "1248",
+      "knee-pitch-left": "2370",
+      "knee-pitch-right": "1480",
+      "ankle-pitch-left": "2550",
+      "ankle-pitch-right": "1900",
+      "ankle-roll-left": "1620",
+      "ankle-roll-right": "2118"
+    }
+  },
+  "player": {
+    "id-robot": "5",
+    "id-team": "1"
+  },
+  "timing": {
+    "window": "2"
+  },
+  "vision": {
+    "draw-thickness": "4",
+    "camera": {
+      "interface": "/dev/video0",
+      "width": "640",
+      "height": "480"
+    },
+    "dnn": {
+      "active": "1",
+      "config-file": "rc.cfg",
+      "heir": "0.5",
+      "max-detect": "8",
+      "thresh": "0.25",
+      "weight-file": "rc.weights"
+    },
+    "labels": {
+      "ball": {
+        "h": {
+          "min": "0",
+          "max": "255"
+        },
+        "s": {
+          "min": "0",
+          "max": "32"
+        },
+        "v": {
+          "min": "192",
+          "max": "255"
+        }
+      }
+    },
+    "processing": {
+      "ball-ratio": "0.9",
+      "debug-compression": "75",
+      "merge-ratio": "0.25",
+      "x-div": "20",
+      "y-div": "20"
+    }
+  },
+  "walk": {
+    "params": {
+      "dist-hip-to-knee": "0.189",
+      "dist-knee-to-ankle": "0.142",
+      "dist-ankle-to-ground": "0.053",
+      "dist-feet-lateral": "0.2",
+      "freq": "1.0",
+      "enabled-gain": "1.0",
+      "support-phase-ratio": "0.0",
+      "foot-y-offset": "0.0",
+      "step-gain": "0.03",
+      "rise-gain": "0.03",
+      "turn-gain": "0.1",
+      "lateral-gain": "0.0",
+      "trunk-z-offset": "0.03",
+      "swing-gain": "0.02",
+      "swing-roll-gain": "0.0",
+      "swing-phase": "0.25",
+      "step-up-vel": "4.0",
+      "step-down-vel": "4.0",
+      "rise-up-vel": "4.0",
+      "rise-down-vel": "4.0",
+      "swing-pause": "0.0",
+      "swing-vel": "4.0",
+      "trunk-x-offset": "0.0",
+      "trunk-y-offset": "0.01",
+      "trunk-pitch": "0.3",
+      "trunk-roll": "0.0",
+      "extra-left-x": "0.0",
+      "extra-left-y": "0.0",
+      "extra-left-z": "0.0",
+      "extra-right-x": "0.0",
+      "extra-right-y": "0.0",
+      "extra-right-z": "0.0",
+      "extra-left-yaw": "0.0",
+      "extra-left-pitch": "0.0",
+      "extra-left-roll": "0.0",
+      "extra-right-yaw": "0.0",
+      "extra-right-pitch": "0.0",
+      "extra-right-roll": "0.0"
+    },
+    "ramp": {
+      "enabled-gain": "0.001",
+      "forward-gain": "0.001",
+      "side-gain": "0.001",
+      "turn-gain": "0.001"
+    }
+  },
+  "www": {
+    "active": "1",
+    "port": "8080"
+  }
+}

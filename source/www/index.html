@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <title>Electic Sheep - Debug Server</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <script src="/static/three.min.js"></script>
+    <script src="/static/STLLoader.js"></script>
+    <script src="/static/debug.js"></script>
+  </head>
+  <body onload="update();">
+    <noscript>
+      Please enable JS to use this page.
+      <br>
+    </noscript>
+    <b><a href="/">Electric Sheep</a> - Debug Server __ Poll (ms):</b>
+    <input class="value" id="poll" type="text" value="1000" />
+    <br>
+    <details>
+      <summary>Configuration</summary>
+      <div>
+        <input type="button" value="temp" onclick="getConfigTemp();" />
+        <input type="button" value="load" onclick="getConfigAll();" />
+        <input type="button" value="send" onclick="setConfigAll();" />
+        <input type="button" value="save" onclick="saveConfigAll();" />
+        <div class="scroll" id="config">
+        </div>
+      </div>
+    </details>
+    <details>
+      <summary>Vision</summary>
+      <div>
+        <select id="image-type"></select>
+        <img id="camera" />
+      </div>
+    </details>
+    <details>
+      <summary>Timing</summary>
+      <div>
+        <div class="scroll" id="timing">
+        </div>
+      </div>
+    </details>
+    <details>
+      <summary>Hardware</summary>
+      <div id="hardware">
+      </div>
+    </details>
+  </body>
+</html>

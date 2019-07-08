@@ -1,0 +1,232 @@
+Serial bus intelligent servo
+SMS1.0 memory table
+revise history
+date		    version     update content
+2016.12.21      V1.00       Initial formulation
+2017.3.7        V1.01       1, modify the document format
+                            2, increase overcurrent protection
+                            3, increase mode 2 function
+                            4, modify the 1.3 chapter error
+                            5. Add 1.4 chapters
+2017.7.20       V1.02       Fix mistakes
+
+
+
+1.1 ERROR Current status
+
+    The returned response packet contains the current ERROR status of the servo. If the current working status of the servo is not normal,
+It will be reflected by this byte. The information of each representative is as follows:
+BIT     name                            detailed
+BIT7    0                               ---
+BIT6    0                               ---
+BIT5    overload                        Output torque is less than the load set
+BIT4    0                               ---
+BIT3    Overcurrent                     Current exceeds the specified range.
+BIT2    overheat                        Temperature exceeds the specified range.
+BIT1    Angle error                     Angle sensor error set
+BIT0    Overvoltage and undervoltage    The voltage is set to exceed the specified range.
+    If ERROR is 0, the servo has no error message.
+
+1.2 memory control table
+
+    The information and control parameters of the robot servo itself form a table that is stored in its RAM and EEPROM areas on control chip.
+. We can achieve real-time control of the servo by modifying the contents of the table in real time.
+This table is called the memory control table and looks like this:
+
+address     Command item        Read and write      Initial value       Storage area
+0 (0x00)    --                  --                  --                  EEPROM
+1 (0x01)    --                  --                  --
+2 (0x02)    --                  --                  --
+3 (0x03)    Software version(L)    read             --
+4 (0x02)    Software version(H)    read             --
+5 (0x05)    ID                  Read/write          00 (0x00)
+6 (0x06)    Baud rate           Read/write          00 (0x00)
+7 (0x07)    Return delay time   Read/write          00 (0x00)
+8 (0x08)    Response status level   Read/write      01 (0x01)
+9 (0x09)    Minimum angle limit (L) read/write      00 (0x00)
+10 (0x0A)   Minimum angle limit (H) read/write      00 (0x00)
+11 (0x0B)   Maximum angle limit (L) read/write      15 (0x0F)
+12 (0x0C)   Maximum angle limit (H) read/write      255 (0xFF)
+13(0x0D)    Maximum temperature limit   Read/write  80 (0x50)
+14 (0x0E)   Maximum input voltage   Read/write      140 (0xFA)
+15 (0x0F)   Minimum input voltage   Read/write      60 (0x32)
+16 (0x10)   Maximum torque (L)      Read/write      03(0x03)
+17 (0x11)   Maximum torque (H)      Read/write      232 (0xE8)
+18 (0x12)   --                    --                --
+19 (0x13)   Unloading condition     Read/write      47 (0x2F)
+20 (0x14)   LED alarm condition     Read/write      47 (0x2F)
+21 (0x15)   P                       Read/write      15 (0x0F)
+22 (0x16)   D                       Read/write      00 (0x00)
+23 (0x17)   I                       Read/write      00 (0x00)
+24 (0x18)   Minimum PWM (L)         Read/write      100 (0x64)
+25 (0x19)   Minimum PWM (H)         Read/write      100 (0x64)
+26 (0x1A)   Clockwise insensitive zone  Read/write  01 (0x01)
+27(0x1B)    Counterclockwise insensitive zone   Read/write  01 (0x01)
+28 (0x1C)   Integration limit (L)   Read/write      00 (0x00)
+29 (0x1D)   Integration limit (H)   Read/write  00 (0x00)
+30 (0x1E)   --                       --                 --
+31 (0x1F)   --                       --                 --
+32 (0x20)   --                      --                  --
+33 (0x21)   Position correction (L) Read/write          00 (0x00)
+34 (0x22)   Position correction (H) Read/write          00 (0x00)
+35 (0x23)   Operating mode          Read/write          00 (0x00)
+36 (0x24)   Protection current (L)  Read/write          07(0x07)
+37 (0x25)   --                      --                  --
+38 (0x26)   --                      --                  --
+39 (0x27)   --                      --                  --
+40 (0x28)   Torque switch       Read/write              00 (0x00)               RAM
+41 (0x29)   --                  --                      --
+42 (0x2A)   Target position (L) Read/write              --
+43 (0x2B)   Target position (H) Read/write              --
+44 (0x2C)   Running time (L)    Read/write              00 (0x00)
+45 (0x2D)   Running time (H)    Read/write              00 (0x00)
+46 (0x2E)   Running speed (L)   Read/write              00 (0x00)
+47 (0x2F)   Running speed (H)   Read/write              00 (0x00)
+48 (0x30)   Lock sign           Read/write              00 (0x00)
+49--55      --                  --                      --
+56 (0x38)   Current position (L)    read                ?
+57 (0x39)   Current position (H)    read                ?
+58 (0x3A)   Current speed (L)       read                ?
+59 (0x3B)   Current speed (H)       read                ?
+60 (0x3C)   Current load (L)        read                ?
+61 (0x3D)   Current load (H)        read                ?
+62 (0x3E)   Current voltage         read                ?
+63 (0x3F)   Current Temperature     read                ?
+64 (0x40)   REG WRITE logo          read                00 (0x00)
+65 (0x41)   --                      --                  --
+66 (0x42)   Mobile sign             read                ?
+67 (0x43)   Current target position (L) read            ?
+68 (0x44)   Current target position (H) read            ?
+69 (0x45)   Current current (L)         read            ?
+70 (0x46)   Current current (H)         read            ?
+
+    If the control parameter has the command of "L" and "H", the range is 0x00-0x3FF; the parameter only accounts for
+a one-byte command with a range of 0x00—0xFE.
+    The parameters saved in the RAM will not be saved after power-off,  the parameters stored in the EEPROM will be saved after power-off.
+" -- " means that the parameters cannot be modified.
+    The detailed description is as follows:
+
+0x06 : baud rate
+The address 0x06 defaults to 0, indicating a baud rate of 1M. You can modify the baud rate to the user's needs.
+For other baud rates, the other baud rates will be restored to 1M. Pair of baud rate and corresponding calculation parameters
+According to the following table:
+
+Address 0x06    Hex     Actual baud rate    Target baud rate    error
+0               0x00    1000000.0           1000000.0           0.000%
+1               0x01    500000.0            500000.0            0.000%
+2               0x02    250000.0            250000.0            0.000%
+3               0x03    128000.0            128000.0            0.000%
+4               0x04    115107.9            115200              0.079%
+5               0x05    76923.0             76800               -0.160%
+6               0x06    57553.9             57600               0.008%
+7               0x07    38461.5             38400               -0.160%
+
+0x07 : Return delay
+    Set the return delay time, that is, how long the delay should be when the servo receives an instruction that needs to be answered
+can be set by you. Time range: parameter (0~254)*2US, if parameter 250, that is, after 500us response;
+The parameter is 0, which means the response is in the shortest time.
+
+0x08 : response level
+    Response level, set whether the servo returns data after receiving the data.
+Address 0x08        returns the response packet
+0                   Other than the read command and the PING command, the response packet is not returned.
+1                   Return a response packet for all instructions
+
+0x09 to 0x0C : angle limit
+    Set the range of angle at which the servo can be operated. The minimum angle limit ≤ target angle value ≤ maximum angle limit value.
+    Note that the minimum angle limit value must be less than the maximum angle limit value. If the target angle value exceeds the range, then equals to the limit value..
+
+0x0D : maximum operating temperature
+    Maximum operating temperature, if set to 80, the maximum temperature is 80 degrees and the setting accuracy is 1 degree.
+
+0x0E : maximum working voltage
+    The highest working voltage, such as high set to 85, the maximum working voltage is 8.5V, the setting accuracy is 0.1V
+
+0x0F : minimum operating voltage
+    The minimum working voltage, such as the high setting of 45, the minimum operating voltage is 4.5V, and the setting accuracy is 0.1V.
+
+0x10 to 0x11 : output torque
+    Set the maximum output torque of the servo. 1000 corresponds to the maximum output torque of the servo.
+
+0x13/0x14 : Set the uninstall /LED alarm condition
+BIT     Features
+BIT7    --
+BIT6    --
+BIT5    If set to 1, reduce torque output / LED alarm when overload occurs
+BIT4    --
+BIT3    If set to 1, unloading torque/LED alarm when overcurrent occurs
+BIT2    If set to 1, unloading torque/LED alarm when overheating occurs
+BIT1    If set to 1, unload torque/LED alarm when the angle sensor is faulty
+BIT0    If set to 1, unloading torque/LED alarm when voltage range is exceeded
+    If the above occurs at the same time, follow the logic or principle, the LED alarm condition (0X14) is set to 0.
+turn off LED, otherwise turn on the LED.
+
+0x1A to 0x1B : dead zone
+    The size of the dead zone of the position closed loop is set to 1 in both clockwise and counterclockwise directions. The dead zone is about 0.087 degrees.
+
+0x21 to 0x22 : 0 point position correction
+    0 point position correction, 0~2047 means positive direction, 2048~4095 means negative direction
+
+0x23 : Run mode
+    In the operation mode, the lower 4 bits take values (0~15) to set the operation mode, and the upper 4 bits to set the operation mode according to the bit value.
+mode    Features
+Mode 2  Set to 2, torque output mode, see section 2.4 for details.
+Mode 1  Set to 1, motor speed mode, see section 2.3 for details.
+Mode 0  Set to 0, servo control mode
+
+0x24~0x25 : protection current
+    When the current protection function is turned on (refer to 0x13/0x14 setting), the servo current is greater than the protection current,
+Flow protection start, torque unload, servo status Error Current overload bit is set.
+    After the current returns to normal, the write position update command can cancel the overcurrent protection.
+
+0x28 : torque output switch
+    Torque output switch: “1” on, “0” off.
+
+0x2A ~ 0x2F : servo control
+address     Features            Description
+0x2A~0x2B   target location     The range is 0x0000—0x0FFF, and 0x0000 corresponds to 0 degrees, 0x0FFF corresponds to 360 degrees, deviation ± 0.4%
+0x2C~0x2D   operation hours     The unit is: 1 millisecond, 0 corresponds to the maximum speed
+0x2E~0x2F   Running speed       Priority > Run Time, unit: 0.087 (degrees / second), 0 maximum speed
+    Servo control parameters, time and speed at which the servo is running to the target position, where the speed parameter is priority to the time parameter
+simultaneously write time and speed parameters, speed parameters are selected as control parameters, time parameter units
+is 1 (milliseconds), the speed parameter unit is 0.087 (degrees/second). For example, the speed is (1000*0.087) degrees/second.
+When set to 0, it corresponds to the maximum speed of the servo.
+
+0x30 : lock function bit
+    Lock function bit. If this bit is set to 0 to turn off the lock protection, the modification about parameters of the EEPROM area can be saved when power off.
+    Note that the lock function bit is set to 0, the servo write speed will be slower, and write operations to the EEPROM area parameters frequently can affect the life of the servo.
+
+0x38~0x48 : Servo feedback information
+address     Features            Description
+0x38~0x39   current location    Reference target position
+0x3A~0x3B   Current speed       The unit has the same running speed, and the highest position is directional position
+0x3C~0x3D   Current load        Value 0~1000
+0x3E        Current voltage     Accuracy is 0.1V
+0x3F        Current Temperature Accuracy is 1 degree
+0x40        REG WRITE logo      If there is a REG WRITE instruction waiting for execution
+                                , it is displayed as 1.
+                                It is displayed as 0 after the REGWRITE instruction is executed.
+0x41        Error               Steering gear status, refer to chapter 1.1
+0x42        Mobile sign         A movement flag of 1 indicates that the servo is running
+                                , 0 means stop running
+0x43~0x44   Current target position Reference target position
+0x45~0x46   Current current     The highest position is the direction
+
+1.3 motor speed control mode
+    The SMS series robot servo can be switched to the motor speed control mode, which can be used on the executive agency such as rotation of wheels, tracks, etc.
+    Set the running mode (x23) to 1, and then give a speed (0x2e~0x2f). The motor will run by motor speed control mode.
+Speed has a size and direction control, as shown in the following table:
+BIT     15      14~0
+VALUE   0/1     SPEED VALUE
+
+    Address 0x2e to 0x2f: BIT15 is the direction bit, which is 0 in the positive direction and 1 in the opposite direction.
+    BIT0~BIT14 is the size, the speed unit is 0.087 (degrees/second). If the input speed value is 1000, the servo running speed is (1000*0.087) degrees/second.
+
+1.4 Torque mode
+    SMS series robot servos can be switched to torque output mode, using on the circle rotation executive agency such as wheels, tracks, etc.
+    Set the running mode (0x23) to 0, and then give a time (0x2c ~ 0x2d), the servo will run with constant torque
+Torque has a size and direction control, as shown in the following table:
+BIT     10      9~0
+VALUE   0/1     TIME VALUE
+    Address 0x2c to 0x2d: BIT10 is the direction bit, which is 0 in the positive direction and 1 in the opposite direction. 
+BIT0~BIT9 is the size, the input range is 0~1000, and the torque output accuracy is 0.1%.

@@ -1,0 +1,170 @@
+{
+  "configuration": { "type": "string", "default": "configuration.json" },
+  "app": {
+    "author":       { "type": "string", "default": "Electric Sheep" },
+    "config-delta": { "type": "string", "default": "delta.json"     },
+    "name":         { "type": "string", "default": "Robot"          }
+  },
+  "button": {
+    "debounce-ms": { "type": "int", "default": "250", "min": "0", "max": "1000" }
+  },
+  "game-controller": {
+    "active":             { "type": "int", "default": "1",    "min": "0",    "max": "1"     },
+    "broadcast-ms":       { "type": "int", "default": "250",  "min": "0",    "max": "1000"  },
+    "lost-controller-ms": { "type": "int", "default": "2500", "min": "0",    "max": "10000" },
+    "port-local":         { "type": "int", "default": "3838", "min": "1024", "max": "65535" },
+    "port-remote":        { "type": "int", "default": "3939", "min": "1024", "max": "65535" },
+    "thread-sleep-ms":    { "type": "int", "default": "10",   "min": "0",    "max": "1000"  }
+  },
+  "gyro": {
+    "active":           { "type": "int",    "default": "1",   "min": "0",   "max": "1"     },
+    "fall-acc-thresh":  { "type": "double", "default": "0.1", "min": "0.0", "max": "10.0"  },
+    "fall-acc-time-ms": { "type": "long",   "default": "200", "min": "0",   "max": "10000" }
+  },
+  "localization": {
+    "field": {
+      "goal-width":   { "type": "double", "default": "2.6", "min": "0.0", "max": "1000.0" },
+      "field-width":  { "type": "double", "default": "6.0", "min": "0.0", "max": "1000.0" },
+      "field-height": { "type": "double", "default": "9.0", "min": "0.0", "max": "1000.0" }
+    }
+  },
+  "mitecom": {
+    "active":          { "type": "int", "default": "1",    "min": "0",    "max": "1"     },
+    "broadcast-ms":    { "type": "int", "default": "250",  "min": "0",    "max": "1000"  },
+    "lost-mate-ms":    { "type": "int", "default": "2500", "min": "0",    "max": "10000" },
+    "port-local":      { "type": "int", "default": "3333", "min": "1024", "max": "65535" },
+    "port-remote":     { "type": "int", "default": "4444", "min": "1024", "max": "65535" },
+    "thread-sleep-ms": { "type": "int", "default": "10",   "min": "0",    "max": "1000"  }
+  },
+  "motor": {
+    "num-motors": { "type": "int", "default": "20", "min": "0", "max": "254" },
+    "smart": {
+      "active":          { "type": "int",    "default": "1",       "min": "0",    "max": "1"       },
+      "baud":            { "type": "int",    "default": "1000000", "min": "9600", "max": "1000000" },
+      "interface-a":     { "type": "string", "default": "/dev/ttyUSB0"                             },
+      "interface-b":     { "type": "string", "default": "/dev/ttyUSB1"                             },
+      "max-return-data": { "type": "int",    "default": "256",     "min": "0",    "max": "256"     },
+      "max-temp":        { "type": "int",    "default": "70",      "min": "0",    "max": "255"     }
+    },
+    "offsets": {
+      "neck-pitch":           { "type": "int", "default": "0",    "min": "0", "max": "180"  },
+      "neck-yaw":             { "type": "int", "default": "0",    "min": "0", "max": "180"  },
+      "shoulder-pitch-left":  { "type": "int", "default": "0"  ,  "min": "0", "max": "4096" },
+      "shoulder-pitch-right": { "type": "int", "default": "8",    "min": "0", "max": "4096" },
+      "shoulder-roll-left":   { "type": "int", "default": "0",    "min": "0", "max": "4096" },
+      "shoulder-roll-right":  { "type": "int", "default": "0",    "min": "0", "max": "4096" },
+      "elbow-pitch-left":     { "type": "int", "default": "0",    "min": "0", "max": "4096" },
+      "elbow-pitch-right":    { "type": "int", "default": "0",    "min": "0", "max": "4096" },
+      "hip-yaw-left":         { "type": "int", "default": "1548", "min": "0", "max": "4096" },
+      "hip-yaw-right":        { "type": "int", "default": "2248", "min": "0", "max": "4096" },
+      "hip-roll-left":        { "type": "int", "default": "1890", "min": "0", "max": "4096" },
+      "hip-roll-right":       { "type": "int", "default": "2160", "min": "0", "max": "4096" },
+      "hip-pitch-left":       { "type": "int", "default": "1600", "min": "0", "max": "4096" },
+      "hip-pitch-right":      { "type": "int", "default": "2200", "min": "0", "max": "4096" },
+      "knee-pitch-left":      { "type": "int", "default": "1350", "min": "0", "max": "4096" },
+      "knee-pitch-right":     { "type": "int", "default": "1580", "min": "0", "max": "4096" },
+      "ankle-pitch-left":     { "type": "int", "default": "2280", "min": "0", "max": "4096" },
+      "ankle-pitch-right":    { "type": "int", "default": "1750", "min": "0", "max": "4096" },
+      "ankle-roll-left":      { "type": "int", "default": "1300", "min": "0", "max": "4096" },
+      "ankle-roll-right":     { "type": "int", "default": "2080", "min": "0", "max": "4096" }
+    }
+  },
+  "player": {
+    "id-robot": { "type": "int", "default": "5", "min": "1", "max" : "65535" },
+    "id-team":  { "type": "int", "default": "1", "min": "1", "max" : "65535" }
+  },
+  "timing": {
+    "window": { "type": "int", "default": "2", "min": "1", "max": "256" }
+  },
+  "vision": {
+    "draw-thickness": { "type": "int", "default": "4", "min": "1", "max": "8" },
+    "camera": {
+      "interface": { "type": "string", "default": "/dev/video0"                      },
+      "width":     { "type": "int",    "default": "640", "min": "320", "max": "1280" },
+      "height":    { "type": "int",    "default": "480", "min": "240", "max": "960"  }
+    },
+    "dnn": {
+      "active":           { "type": "int",    "default": "1",    "min": "0",   "max": "1"   },
+      "config-file":      { "type": "string", "default": "rc.cfg"                           },
+      "heir":             { "type": "double", "default": "0.5",  "min": "0.0", "max": "1.0" },
+      "max-detect":       { "type": "int",    "default": "8",    "min": "1",   "max": "256" },
+      "thresh":           { "type": "double", "default": "0.25", "min": "0.0", "max": "1.0" },
+      "weight-file":      { "type": "string", "default": "rc.weights"                       }
+    },
+    "labels": {
+      "ball": {
+        "h": {
+          "min": { "type": "int", "default": "0",   "min": "0", "max": "255" },
+          "max": { "type": "int", "default": "255", "min": "0", "max": "255" }
+        },
+        "s": {
+          "min": { "type": "int", "default": "0",  "min": "0", "max": "255" },
+          "max": { "type": "int", "default": "32", "min": "0", "max": "255" }
+        },
+        "v": {
+          "min": { "type": "int", "default": "192", "min": "0", "max": "255" },
+          "max": { "type": "int", "default": "255", "min": "0", "max": "255" }
+        }
+      }
+    },
+    "processing": {
+      "ball-ratio":        { "type": "double", "default": "0.9",  "min": "0.0", "max": "1.0" },
+      "debug-compression": { "type": "int",    "default": "75",   "min": "0",   "max": "100" },
+      "merge-ratio":       { "type": "double", "default": "0.25", "min": "0.0", "max": "1.0" },
+      "x-div":             { "type": "int",    "default": "20",   "min": "1",   "max": "640" },
+      "y-div":             { "type": "int",    "default": "20",   "min": "1",   "max": "480" }
+    }
+  },
+  "walk": {
+    "params": {
+      "dist-hip-to-knee":     { "type": "double", "default": "0.175", "min": "0.0",      "max": "10.0"    },
+      "dist-knee-to-ankle":   { "type": "double", "default": "0.09",  "min": "0.0",      "max": "10.0"    },
+      "dist-ankle-to-ground": { "type": "double", "default": "0.09",  "min": "0.0",      "max": "10.0"    },
+      "dist-feet-lateral":    { "type": "double", "default": "0.112", "min": "0.0",      "max": "10.0"    },
+      "freq":                 { "type": "double", "default": "1.7",   "min": "0.0",      "max": "10.0"    },
+      "enabled-gain":         { "type": "double", "default": "1.0",   "min": "0.0",      "max": "1.0"     },
+      "support-phase-ratio":  { "type": "double", "default": "0.0",   "min": "0.0",      "max": "1.0"     },
+      "foot-y-offset":        { "type": "double", "default": "0.01",  "min": "-10.0",    "max": "10.0"    },
+      "step-gain":            { "type": "double", "default": "0.02",  "min": "-10.0",    "max": "10.0"    },
+      "rise-gain":            { "type": "double", "default": "0.025", "min": "-10.0",    "max": "10.0"    },
+      "turn-gain":            { "type": "double", "default": "0.1",   "min": "-10.0",    "max": "10.0"    },
+      "lateral-gain":         { "type": "double", "default": "0.02",  "min": "-10.0",    "max": "10.0"    },
+      "trunk-z-offset":       { "type": "double", "default": "0.02",  "min": "-10.0",    "max": "10.0"    },
+      "swing-gain":           { "type": "double", "default": "0.02",  "min": "-10.0",    "max": "10.0"    },
+      "swing-roll-gain":      { "type": "double", "default": "0.0",   "min": "0.0",      "max": "1.0"     },
+      "swing-phase":          { "type": "double", "default": "0.25",  "min": "0.0",      "max": "1.0"     },
+      "step-up-vel":          { "type": "double", "default": "4.0",   "min": "-10.0",    "max": "10.0"    },
+      "step-down-vel":        { "type": "double", "default": "4.0",   "min": "-10.0",    "max": "10.0"    },
+      "rise-up-vel":          { "type": "double", "default": "4.0",   "min": "-10.0",    "max": "10.0"    },
+      "rise-down-vel":        { "type": "double", "default": "4.0",   "min": "-10.0",    "max": "10.0"    },
+      "swing-pause":          { "type": "double", "default": "0.0",   "min": "0.0",      "max": "1.0"     },
+      "swing-vel":            { "type": "double", "default": "4.0",   "min": "-10.0",    "max": "10.0"    },
+      "trunk-x-offset":       { "type": "double", "default": "0.002", "min": "-10.0",    "max": "10.0"    },
+      "trunk-y-offset":       { "type": "double", "default": "0.0",   "min": "-10.0",    "max": "10.0"    },
+      "trunk-pitch":          { "type": "double", "default": "0.3",   "min": "-3.14159", "max": "3.14159" },
+      "trunk-roll":           { "type": "double", "default": "0.0",   "min": "-3.14159", "max": "3.14159" },
+      "extra-left-x":         { "type": "double", "default": "0.0",   "min": "-10.0",    "max": "10.0"    },
+      "extra-left-y":         { "type": "double", "default": "0.0",   "min": "-10.0",    "max": "10.0"    },
+      "extra-left-z":         { "type": "double", "default": "0.0",   "min": "-10.0",    "max": "10.0"    },
+      "extra-right-x":        { "type": "double", "default": "0.0",   "min": "-10.0",    "max": "10.0"    },
+      "extra-right-y":        { "type": "double", "default": "0.0",   "min": "-10.0",    "max": "10.0"    },
+      "extra-right-z":        { "type": "double", "default": "0.0",   "min": "-10.0",    "max": "10.0"    },
+      "extra-left-yaw":       { "type": "double", "default": "0.0",   "min": "-3.14159", "max": "3.14159" },
+      "extra-left-pitch":     { "type": "double", "default": "0.0",   "min": "-3.14159", "max": "3.14159" },
+      "extra-left-roll":      { "type": "double", "default": "0.0",   "min": "-3.14159", "max": "3.14159" },
+      "extra-right-yaw":      { "type": "double", "default": "0.0",   "min": "-3.14159", "max": "3.14159" },
+      "extra-right-pitch":    { "type": "double", "default": "0.0",   "min": "-3.14159", "max": "3.14159" },
+      "extra-right-roll":     { "type": "double", "default": "0.0",   "min": "-3.14159", "max": "3.14159" }
+    },
+    "ramp": {
+      "enabled-gain": { "type": "double", "default": "0.01", "min": "-1.0", "max": "1.0" },
+      "forward-gain": { "type": "double", "default": "0.01", "min": "-1.0", "max": "1.0" },
+      "side-gain":    { "type": "double", "default": "0.01", "min": "-1.0", "max": "1.0" },
+      "turn-gain":    { "type": "double", "default": "0.01", "min": "-1.0", "max": "1.0" }
+    }
+  },
+  "www": {
+    "active": { "type": "int", "default": "1",    "min": "0", "max": "1"     },
+    "port":   { "type": "int", "default": "8080", "min": "0", "max": "65535" }
+  }
+}

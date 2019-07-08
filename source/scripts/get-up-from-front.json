@@ -1,0 +1,57 @@
+{
+  "name": "get-up-from-front",
+  "phase": [
+    {
+      "description": "laying position",
+      "duration": "1000",
+      "values": {
+        "neck-pitch": "0",
+        "neck-yaw": "0",
+        "shoulder-pitch-left": "0",
+        "shoulder-pitch-right": "0",
+        "shoulder-roll-left": "0",
+        "shoulder-roll-right": "0",
+        "elbow-pitch-left": "0",
+        "elbow-pitch-right": "0",
+        "hip-yaw-left": "0",
+        "hip-yaw-right": "0",
+        "hip-roll-left": "0",
+        "hip-roll-right": "0",
+        "hip-pitch-left": "0",
+        "hip-pitch-right": "0",
+        "knee-pitch-left": "0",
+        "knee-pitch-right": "0",
+        "ankle-pitch-left": "0",
+        "ankle-pitch-right": "0",
+        "ankle-roll-left": "0",
+        "ankle-roll-right": "0"
+      }
+    },
+    {
+      "description": "flip over",
+      "duration": "3000",
+      "values": {
+        "neck-pitch": "0",
+        "neck-yaw": "0",
+        "shoulder-pitch-left": "-90",
+        "shoulder-pitch-right": "-90",
+        "shoulder-roll-left": "0",
+        "shoulder-roll-right": "0",
+        "elbow-pitch-left": "90",
+        "elbow-pitch-right": "90",
+        "hip-yaw-left": "0",
+        "hip-yaw-right": "0",
+        "hip-roll-left": "0",
+        "hip-roll-right": "0",
+        "hip-pitch-left": "-1000",
+        "hip-pitch-right": "1000",
+        "knee-pitch-left": "-1000",
+        "knee-pitch-right": "1000",
+        "ankle-pitch-left": "0",
+        "ankle-pitch-right": "0",
+        "ankle-roll-left": "0",
+        "ankle-roll-right": "0"
+      }
+    }
+  ]
+}

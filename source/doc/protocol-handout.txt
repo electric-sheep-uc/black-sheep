@@ -1,0 +1,239 @@
+Serial bus intelligent servo
+SMS1.0 Protocol Manual
+revise history
+date        version     update content      Formulator
+2017.03.01  V1.00       Initial formulation Alex lee
+
+1.0 Communication Protocol Summary
+
+  The SMS1.0 protocol is primarily applicable to the FEETECH SMS series of servo. The SMS series servos are based on ARM 32-bit microcontrollers with
+main control core, position sensing adopts 360 degree 12-bit precision magnet sensing angle scheme, and communication level is stronger
+RS485 mode of anti-interference ability.
+
+  The controller and the servo communicate in a question and answer manner, the controller issues an instruction packet, and the servo returns a response packet.
+
+  Multiple servos are allowed in a bus control network, so each servo is assigned a unique ID number within the network.
+The control command issued by the controller contains the ID information, and only the servo that matches the ID number can receive the command completely, and
+Returns a response message.
+
+  The communication mode is serial asynchronous mode. One frame of data is divided into 1 start bit, 8 data bits and 1 stop bit.
+Even parity bit, a total of 10 bits.
+
+1.1 instruction package
+
+Instruction package format:
+
+Header: Two 0XFFs are received consecutively, indicating that a packet has arrived.
+
+ID number: Each servo has an ID number. The ID number ranges from 0 to 253 and is converted to hexadecimal 0X00 to 0XFD.
+
+Broadcast ID: ID number 254 is the broadcast ID. If the controller sends an ID number of 254 (0XFE), all servos are received the commands, except for the PING command, do not return a response message (multiple servos are connected to the bus and cannot use the broadcast PING)
+
+Data length: equal to the length of the parameter to be sent N plus 2, which is "N+2".
+
+Instruction: Packet operation function code, see 1.3 Instruction Type for details.
+
+Parameters: In addition to the instruction, additional control information is required. The max parameter supports a double-byte parameter to represent a memory value. The section order refers to the servo manual of the servo manual (the order of the servos of different models is different).
+
+Checksum: Checksum, Sum, calculated as follows
+
+Check Sum = ~ (ID + Length + Instruction + Parameter1 + ... Parameter N)
+If the calculation in parentheses exceeds 255, the lowest byte is taken, and "~" indicates negation.
+
+
+1.2 Response package
+
+The response packet is the response of the servo to the controller. The response packet format is as follows:
+
+    The returned response packet contains the current state of the servo ERROR. If the current working state of the servo is not normal,
+The section is reflected by this bit(see the manual memory control table for the meaning of each state). If ERROR is 0, the servo has no error message.
+
+    If the instruction is a read command (READ DATA), then Parameter1 ...Parameter N is the read information.
+
+1.3 Instruction type
+
+The instructions available for the SMS 1.0 protocol are as follows:
+
+instruction     Features        value       Parameter length
+PING (query)    Query work status    0x01    0
+READ DATA (read) Query the characters in the control table 0x02 2
+WRITE DATA (write) Write characters to the control table 0x03 Greater than or equal to 1
+REGWRITE DATA (asynchronous write) Similar to WRITE DATA, but the control characters are not take action immediately after written ,until the ACTION command arrives  0x04  Not less than 2
+ACTION (execute asynchronous write)  Trigger REG WRITE write action  0x05  0
+SYCNWRITE DATA   using in simultaneous control of multiple servos  0x83  Not less than 2
+RESET (reset)  Reset the control table to the factory value  0x06  0
+
+1.3.1 Query Status Command PING
+
+Features        Read the working state of the servo
+length      0X02
+instruction     0X01
+parameter       no
+
+The PING command uses the broadcast address and the servo also returns a response message.
+
+Example 1 Read the working status of the servo with ID number 1
+Instruction frame: FF FF 01 02 01 FB ` (sent in hexadecimal)
+Header      ID      Effective data length       instruction     Checksum
+0XFF 0XFF   0X01    0X02                        0X01            0XFB
+Returned data frame: FF FF 01 02 00 FC (hexadecimal display)
+Header      ID      Effective data length       Working status      Checksum
+0XFF 0XFF   0X01    0X02                        0X00                0XFC
+
+1.3.2 Read Instruction READ DATA
+Features    Read data from the servo memory control table
+length      0X04
+instruction 0X02
+Parameter 1 The first address of the data readout segment
+Parameter 2 Read data length
+
+Example 2 Read the current position of the servo with ID 1 (low byte first, high byte last).
+    Two bytes are read from the address 0X38 in the control table .
+    Instruction frame: FF FF 01 04 02 38 02 BE (sent in hex)
+Header      ID      Effective data length       instruction     parameter       Checksum
+0XFF 0XFF   0X01    0X04                        0X02            0X38 0X02       0XBE
+
+    Returned data frame: FF FF 01 04 00 18 05 DD (hexadecimal display)
+Header      ID      Effective data length       Working status      parameter       Checksum
+0XFF 0XFF   0X01    0X04                        0X00                0X18 0X05       0XDD
+    Read two bytes of data are: low byte L 0X18 high byte H 0X05
+    Two-byte synthesis 16-bit data 0X0518 , in decimal, the current position is 1304.
+
+1.3.3 Write WRITE DATA
+Features        Write data to the servo memory control table
+length          N+3 (N is the parameter length)
+instruction     0X03
+Parameter 1     The first address of the data write segment
+Parameter 2     The first data written
+Parameter 3     The Second data
+Parameter N+1   TheNth data
+
+Example 3 sets an arbitrary numbered ID to 1.
+    The address where the ID number is stored in the control table is 5, so write 1 at address 5. Send the ID of the instruction package using
+broadcast ID (0xFE).
+Instruction frame: FF FF FE 04 03 05 01 F4 (sent in hexadecimal)
+Header      ID      Effective data length       instruction     parameter       Checksum
+0XFF 0XFF   0XFE    0X04                        0X03            0X05 0X01       0XF4
+    Since the instruction is sent with the broadcast ID, no data is returned.
+    In addition, the memory table EPROM has a protection lock switch. It needs to be turned off before modifying the ID. Otherwise, the example ID number will not be saved when power down.
+For detailed operation, please refer to the memory table or operation manual of the specific servo model.
+
+
+Example 4 Controls the ID1 servo to rotate to a position of 2048 at 1000 rpm.
+
+    The first address of the target position in the control table is 0X2A , so the writing of six consecutive bytes of data starts at address 0X2A.
+They are position data 0X0800 (2048); time data 0X0000 (0); speed data 0X03E8 (1000).
+The ID that sending instruction packet uses a non-broadcast ID (0xFE), so the servo will return a status packet when the command is received.
+
+
+
+Command frame: FF FF 01 09 03 2A 00 08 00 00 E8 03 D5 (send in hexadecimal)
+Header      ID          Effective data length           instruction         parameter           Checksum
+0XFF 0XFF   0X01        0X09                            0X03                0X2A                0XD5
+                                                                            0X00 0X08
+                                                                            0X00 0X00
+                                                                            0XE8 0X03
+
+Returned data frame: FF FF 01 02 00 FC (hexadecimal display)
+Header      ID      Effective data length       Working status      Checksum
+0XFF 0XFF   0X01    0X02                        0X00                0XFC
+Returning to the working state is 0, indicating that the servo has received the command correctly and error-free and has started execution.
+
+
+1.3.4 Asynchronous Write Command REG WRITE
+
+    The REG WRITE instruction is similar to WRITE DATA except that the execution time is different. When receiving a REG WRITE command frame,
+Store the received data in a buffer spare and set the Registered Instruction register to 1. After receiving ACTION instruction, the stored instructions are finally executed.
+
+Length          N+3 (N is the number of data to be written)
+Instruction     0X04
+Parameter 1     data to be written to the first address of the area
+Parameter 2     The first data to be written
+Parameter 3     The second data to be written
+Parameter N+1   The Nth data to be written
+
+
+Example 5 Control ID1 to ID10 servos rotate to a position of 2048 at 1000 rpm, only the ID in the following command package which
+on the bus and receiving the instruction and returning, the other ID numbers are not returned on the bus.
+ID 1    asynchronous write command packet: FF FF 01 09 04 2A 00 08 00 00 E8 03 D4
+ID 1                       return package: FF FF 01 02 00 FC
+ID 2   asynchronous write command package: FF FF 02 09 04 2A 00 08 00 00 E8 03 D3
+ID 3   asynchronous write command package: FF FF 03 09 04 2A 00 08 00 00 E8 03 D2
+ID 4  Asynchronous Write Instruction Pack: FF FF 04 09 04 2A 00 08 00 00 E8 03 D1
+ID 5    asynchronous write command packet: FF FF 05 09 04 2A 00 08 00 00 E8 03 D0
+ID 6   asynchronous write command package: FF FF 06 09 04 2A 00 08 00 00 E8 03 CF
+ID 7    asynchronous write command packet: FF FF 07 09 04 2A 00 08 00 00 E8 03 CE
+ID 8    Asynchronous Write Command Packet: FF FF 08 09 04 2A 00 08 00 00 E8 03 CD
+ID 9   asynchronous write command package: FF FF 09 09 04 2A 00 08 00 00 E8 03 CC
+ID10 asynchronous write instruction package: FF FF 0A 09 04 2A 00 08 00 00 E8 03 CB
+
+
+1.3.5 Execute asynchronous write command ACTION
+
+Features        Trigger REG WRITE instruction
+length          0X02
+instruction     0X05
+parameter       no
+
+    The ACTION command is very useful when controlling multiple servos at the same time.
+    When controlling multiple servos, use the ACTION command to have the first and last servos perform their own movements simultaneously.
+There is no delay in the middle.
+    When sending an ACTION command to multiple servos, the broadcast ID (0xFE) is used, so there is no data frame returned after sending this command.
+
+Example 6 After controlling the ID1 to ID10 servos to rotate at a speed of 1000 rpm to 2048 with asynchronous write command sending out.
+To execute an asynchronous write instruction, the following instruction packet ( FF FF FE 02 05 FA ) needs to be sent .
+All the servos on the bus will run the previously received asynchronous write instruction after receipt of this instruction.
+
+
+1.4.5 Synchronous Write Command SYNC WRITE
+Features        Used to control multiple servos at the same time.
+ID              0XFE
+length          (L + 1) * N + 4 (L: data length sent to each servo, N: number of servos)
+instruction     0X83
+Parameter 1     writes the first address of the data
+parameter 2     The length of the data written(L)
+Parameter 3     ID number of the first servo
+Parameter 4     written to the first data of the first servo
+Parameter 5     written to the second data of the first servo
+...
+Parameter L+3   written to the Lth data of the first servo
+Parameter L+4   ID number of the second servo
+Parameter L+5   written to the first data of the second servo
+Parameter L+6   written to the second data of the second servo
+...
+Parameter 2L+4 is written to the Lth data of the second servo
+...
+    Unlike the REG WRITE+ACTION instruction, this command's real-time performance is higher than it, and a SYNC WRITE instruction can be modified the contents of the control table of multiple servos at one time, but the REG WRITE+ACTION instruction is done step by step. 
+Otherwise, use SYNC WRITE instruction, the length of the written data and the first address of the saved data must be the same.
+
+Example 7 For ID1-ID4 A total of 4 servos first address 0X2A write position 0X0800 time 0X0000 and speed 0X03E8 
+( low bit is in the front and the high bit is in the back ).
+
+
+Command frame: FF FF FE 20 83 2A 06 01 00 08 00 00 E8 03 02 00 08 00 00 E8 03 03 00 08
+00 00 E8 03 04 00 08 00 00 E8 03 58 (sent in hex)
+Header      ID      Effective data length       instruction     parameter                               Checksum
+0XFF 0XFF   0XFE    0X20                        0X83 OX2A OX06                                          0X58
+                                                                OX01 OX00 OX08 OX00 OX00 OXE8 OX03
+                                                                OX02 OX00 OX08 OX00 OX00 OXE8 OX03
+                                                                OX03 OX00 OX08 OX00 OX00 OXE8 OX03
+                                                                OX04 OX00 OX08 OX00 OX00 OXE8 OX03
+
+
+Since the instruction is sent with the broadcast ID, no data is returned.
+
+1.4.6 Reset Instruction RESET
+Features        Reset specific data in the memory control table (specific servo models are used)
+length          0X02
+instruction     0X06
+parameter       no
+
+Example, reset the servo, the ID number is 0.
+
+Instruction frame: FF FF 01 02 06 F6 (sent in hexadecimal)
+Header      ID      Effective data length       instruction     Checksum
+0XFF 0XFF   0X00    0X02                        0X06            0XF7
+
+Returned data frame: FF FF 01 02 00 FC (hexadecimal display)
+Header      ID      Effective data length       Working status      Checksum
+0XFF 0XFF   0X01    0X02                        0X00                0XFC

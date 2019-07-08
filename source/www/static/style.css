@@ -1,0 +1,26 @@
+body, .value{
+  background-color: #000;
+  color: #FFF;
+  font-family: monospace;
+  font-size: 14px;
+}
+div{
+  background-color: #222;
+  height: 400px;
+  overflow-y: auto;
+  text-align: center;
+}
+.scroll{ overflow-y: visible; }
+summary, .read{ background-color: #444; }
+details{
+  display: inline-block;
+  min-width: 400px;
+  width: 32%;
+}
+.value{ width: 10ch; }
+.edit{ background-color: #24B; }
+img{
+  background-color: #FFF;
+  width: 100%;
+  height: auto;
+}

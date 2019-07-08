@@ -1,0 +1,31 @@
+{
+  "name": "zero",
+  "phase": [
+    {
+      "description": "zero all the motor positions",
+      "duration": "2000",
+      "values": {
+        "neck-pitch": "0",
+        "neck-yaw": "0",
+        "shoulder-pitch-left": "0",
+        "shoulder-pitch-right": "0",
+        "shoulder-roll-left": "0",
+        "shoulder-roll-right": "0",
+        "elbow-pitch-left": "0",
+        "elbow-pitch-right": "0",
+        "hip-yaw-left": "0",
+        "hip-yaw-right": "0",
+        "hip-roll-left": "0",
+        "hip-roll-right": "0",
+        "hip-pitch-left": "0",
+        "hip-pitch-right": "0",
+        "knee-pitch-left": "0",
+        "knee-pitch-right": "0",
+        "ankle-pitch-left": "0",
+        "ankle-pitch-right": "0",
+        "ankle-roll-left": "0",
+        "ankle-roll-right": "0"
+      }
+    }
+  ]
+}

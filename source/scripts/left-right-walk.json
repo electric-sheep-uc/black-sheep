@@ -1,0 +1,109 @@
+{
+  "name": "left-right-walk",
+  "phase": [
+    {
+      "description": "left leg forwards, right leg back",
+      "duration": "1250",
+      "values": {
+        "neck-pitch": "0",
+        "neck-yaw": "0",
+        "shoulder-pitch-left": "0",
+        "shoulder-pitch-right": "0",
+        "shoulder-roll-left": "0",
+        "shoulder-roll-right": "0",
+        "elbow-pitch-left": "0",
+        "elbow-pitch-right": "0",
+        "hip-yaw-left": "0",
+        "hip-yaw-right": "0",
+        "hip-roll-left": "0",
+        "hip-roll-right": "0",
+        "hip-pitch-left": "-350",
+        "hip-pitch-right": "-250",
+        "knee-pitch-left": "200",
+        "knee-pitch-right": "200",
+        "ankle-pitch-left": "-175",
+        "ankle-pitch-right": "-150",
+        "ankle-roll-left": "0",
+        "ankle-roll-right": "0"
+      }
+    },
+    {
+      "description": "balance on left leg",
+      "duration": "1000",
+      "values": {
+        "neck-pitch": "0",
+        "neck-yaw": "0",
+        "shoulder-pitch-left": "0",
+        "shoulder-pitch-right": "0",
+        "shoulder-roll-left": "0",
+        "shoulder-roll-right": "0",
+        "elbow-pitch-left": "0",
+        "elbow-pitch-right": "0",
+        "hip-yaw-left": "0",
+        "hip-yaw-right": "0",
+        "hip-roll-left": "0",
+        "hip-roll-right": "-100",
+        "hip-pitch-left": "-450",
+        "hip-pitch-right": "-250",
+        "knee-pitch-left": "200",
+        "knee-pitch-right": "200",
+        "ankle-pitch-left": "-150",
+        "ankle-pitch-right": "-150",
+        "ankle-roll-left": "175",
+        "ankle-roll-right": "175"
+      }
+    },
+    {
+      "description": "lift right leg whilst maintaining balance",
+      "duration": "500",
+      "values": {
+        "neck-pitch": "0",
+        "neck-yaw": "0",
+        "shoulder-pitch-left": "0",
+        "shoulder-pitch-right": "0",
+        "shoulder-roll-left": "0",
+        "shoulder-roll-right": "0",
+        "elbow-pitch-left": "0",
+        "elbow-pitch-right": "0",
+        "hip-yaw-left": "0",
+        "hip-yaw-right": "0",
+        "hip-roll-left": "0",
+        "hip-roll-right": "-100",
+        "hip-pitch-left": "-250",
+        "hip-pitch-right": "-650",
+        "knee-pitch-left": "200",
+        "knee-pitch-right": "600",
+        "ankle-pitch-left": "-250",
+        "ankle-pitch-right": "-200",
+        "ankle-roll-left": "175",
+        "ankle-roll-right": "175"
+      }
+    },
+    {
+      "description": "right leg forwards, left leg back",
+      "duration": "250",
+      "values": {
+        "neck-pitch": "0",
+        "neck-yaw": "0",
+        "shoulder-pitch-left": "0",
+        "shoulder-pitch-right": "0",
+        "shoulder-roll-left": "0",
+        "shoulder-roll-right": "0",
+        "elbow-pitch-left": "0",
+        "elbow-pitch-right": "0",
+        "hip-yaw-left": "0",
+        "hip-yaw-right": "0",
+        "hip-roll-left": "0",
+        "hip-roll-right": "0",
+        "hip-pitch-left": "-250",
+        "hip-pitch-right": "-350",
+        "knee-pitch-left": "200",
+        "knee-pitch-right": "200",
+        "ankle-pitch-left": "-150",
+        "ankle-pitch-right": "-175",
+        "ankle-roll-left": "0",
+        "ankle-roll-right": "0"
+      }
+    }
+  ]
+}
