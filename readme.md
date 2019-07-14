@@ -8,7 +8,7 @@ presented in the 2019 RoboCup competition in Sydney, Australia. Please observe
 the [license](LICENSE) in this repository (projects used in this release have
 their own licenses either within their directories or in their source files).
 
-**TODO:** Link to white paper.
+We recommend that you read the technical report [here](docs/paper.pdf).
 
 ## Details
 
