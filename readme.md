@@ -5,7 +5,8 @@
 This repository contains a snapshot of the
 [Electric Sheep](https://humanoid.science) humanoid robotics platform as
 presented in the 2019 RoboCup competition in Sydney, Australia. Please observe
-the [license](LICENSE) in this repository.
+the [license](LICENSE) in this repository (projects used in this release have
+their own licenses either within their directories or in their source files).
 
 **TODO:** Link to white paper.
 
